@@ -5,7 +5,7 @@
 - **This only works for the Norwegian crown (NOK) (Please make an issue on this git if you want your own currency to work with this program)**
 - Do not worry, this program will not (NEVER!) buy any item on wish using your credentials.
 
-#TODO-list
+# TODO-list
 
 - Get currency dynamically for all users
 - Get pictures of items in an imagelist to be shown
