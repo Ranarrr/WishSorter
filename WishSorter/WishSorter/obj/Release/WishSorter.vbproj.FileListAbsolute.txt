@@ -1,0 +1,14 @@
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\bin\Release\WishSorter.exe.config
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\bin\Release\WishSorter.exe
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\bin\Release\WishSorter.pdb
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\bin\Release\WishSorter.xml
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\obj\Release\WishSorter.vbprojResolveAssemblyReference.cache
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\obj\Release\WishSorter.mainfrm.resources
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\obj\Release\WishSorter.Form2.resources
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\obj\Release\WishSorter.loginForm.resources
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\obj\Release\WishSorter.Resources.resources
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\obj\Release\WishSorter.vbproj.GenerateResource.Cache
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\obj\Release\WishSorter.vbproj.CoreCompileInputs.cache
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\obj\Release\WishSorter.exe
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\obj\Release\WishSorter.xml
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\obj\Release\WishSorter.pdb

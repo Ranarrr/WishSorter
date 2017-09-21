@@ -1,0 +1,31 @@
+C:\Users\Alexa\Desktop\alimentation papers\Personal\Software\Tools\WishSorter\WishSorter\obj\Debug\WishSorter.vbprojResolveAssemblyReference.cache
+C:\Users\Alexa\Desktop\alimentation papers\Personal\Software\Tools\WishSorter\WishSorter\obj\Debug\WishSorter.mainfrm.resources
+C:\Users\Alexa\Desktop\alimentation papers\Personal\Software\Tools\WishSorter\WishSorter\obj\Debug\WishSorter.Resources.resources
+C:\Users\Alexa\Desktop\alimentation papers\Personal\Software\Tools\WishSorter\WishSorter\obj\Debug\WishSorter.vbproj.GenerateResource.Cache
+C:\Users\Alexa\Desktop\alimentation papers\Personal\Software\Tools\WishSorter\WishSorter\obj\Debug\WishSorter.vbproj.CoreCompileInputs.cache
+C:\Users\Alexa\Desktop\alimentation papers\Personal\Software\Tools\WishSorter\WishSorter\bin\Debug\WishSorter.exe.config
+C:\Users\Alexa\Desktop\alimentation papers\Personal\Software\Tools\WishSorter\WishSorter\bin\Debug\WishSorter.exe
+C:\Users\Alexa\Desktop\alimentation papers\Personal\Software\Tools\WishSorter\WishSorter\bin\Debug\WishSorter.pdb
+C:\Users\Alexa\Desktop\alimentation papers\Personal\Software\Tools\WishSorter\WishSorter\bin\Debug\WishSorter.xml
+C:\Users\Alexa\Desktop\alimentation papers\Personal\Software\Tools\WishSorter\WishSorter\bin\Debug\HtmlAgilityPack.dll
+C:\Users\Alexa\Desktop\alimentation papers\Personal\Software\Tools\WishSorter\WishSorter\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\Alexa\Desktop\alimentation papers\Personal\Software\Tools\WishSorter\WishSorter\bin\Debug\HtmlAgilityPack.xml
+C:\Users\Alexa\Desktop\alimentation papers\Personal\Software\Tools\WishSorter\WishSorter\obj\Debug\WishSorter.exe
+C:\Users\Alexa\Desktop\alimentation papers\Personal\Software\Tools\WishSorter\WishSorter\obj\Debug\WishSorter.xml
+C:\Users\Alexa\Desktop\alimentation papers\Personal\Software\Tools\WishSorter\WishSorter\obj\Debug\WishSorter.pdb
+C:\Users\Alexa\Desktop\alimentation papers\Personal\Software\Tools\WishSorter\WishSorter\obj\Debug\WishSorter.Form2.resources
+C:\Users\Alexa\Desktop\alimentation papers\Personal\Software\Tools\WishSorter\WishSorter\obj\Debug\WishSorter.loginForm.resources
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\bin\Debug\WishSorter.exe.config
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\bin\Debug\WishSorter.exe
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\bin\Debug\WishSorter.pdb
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\bin\Debug\WishSorter.xml
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\obj\Debug\WishSorter.vbprojResolveAssemblyReference.cache
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\obj\Debug\WishSorter.mainfrm.resources
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\obj\Debug\WishSorter.Form2.resources
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\obj\Debug\WishSorter.loginForm.resources
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\obj\Debug\WishSorter.Resources.resources
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\obj\Debug\WishSorter.vbproj.GenerateResource.Cache
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\obj\Debug\WishSorter.vbproj.CoreCompileInputs.cache
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\obj\Debug\WishSorter.exe
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\obj\Debug\WishSorter.xml
+C:\Users\Alexa\Documents\GitHub\WishSorter\WishSorter\WishSorter\obj\Debug\WishSorter.pdb
