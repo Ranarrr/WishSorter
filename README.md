@@ -11,3 +11,6 @@
 - Get pictures of items in an imagelist to be shown
 - Make program independent of a webbrowser control (HTTPRequest)
 - Make saving credentials locally a thing
+
+# Bins/Executables
+[Binaries Debug/Release](https://fs05n2.sendspace.com/dl/699475c3acb57a043b9bdf6d2e6689cc/59c4171875e74d86/erull3/bins.rar)
