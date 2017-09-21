@@ -13,4 +13,4 @@
 - Make saving credentials locally a thing
 
 # Bins/Executables
-[Binaries Debug/Release](https://fs05n2.sendspace.com/dl/699475c3acb57a043b9bdf6d2e6689cc/59c4171875e74d86/erull3/bins.rar)
+[Binaries Debug/Release](http://rgho.st/download/private/7v4rqZcQl/849e7779e34661ec0c3907a64edc3009/c9d592d03a8af54f31d8c0fdf240f26a4930e6ef/bins.rar)
