@@ -37,14 +37,14 @@ Partial Class mainfrm
 		Me.Label1 = New System.Windows.Forms.Label()
 		Me.TextBox2 = New System.Windows.Forms.TextBox()
 		Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+		Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
 		Me.MenuStrip1.SuspendLayout()
 		Me.StatusStrip1.SuspendLayout()
 		Me.SuspendLayout()
 		'
 		'Button1
 		'
-		Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-		Me.Button1.Location = New System.Drawing.Point(671, 31)
+		Me.Button1.Location = New System.Drawing.Point(845, 31)
 		Me.Button1.Name = "Button1"
 		Me.Button1.Size = New System.Drawing.Size(75, 23)
 		Me.Button1.TabIndex = 0
@@ -53,22 +53,19 @@ Partial Class mainfrm
 		'
 		'TextBox1
 		'
-		Me.TextBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-			Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
 		Me.TextBox1.Location = New System.Drawing.Point(12, 33)
 		Me.TextBox1.Name = "TextBox1"
-		Me.TextBox1.Size = New System.Drawing.Size(518, 20)
+		Me.TextBox1.Size = New System.Drawing.Size(692, 20)
 		Me.TextBox1.TabIndex = 1
 		'
 		'ListBox1
 		'
-		Me.ListBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-			Or System.Windows.Forms.AnchorStyles.Left) _
-			Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+		Me.ListBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+			Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
 		Me.ListBox1.FormattingEnabled = True
 		Me.ListBox1.Location = New System.Drawing.Point(12, 60)
 		Me.ListBox1.Name = "ListBox1"
-		Me.ListBox1.Size = New System.Drawing.Size(734, 511)
+		Me.ListBox1.Size = New System.Drawing.Size(908, 524)
 		Me.ListBox1.TabIndex = 2
 		'
 		'MenuStrip1
@@ -76,7 +73,7 @@ Partial Class mainfrm
 		Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.ViewToolStripMenuItem})
 		Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
 		Me.MenuStrip1.Name = "MenuStrip1"
-		Me.MenuStrip1.Size = New System.Drawing.Size(758, 24)
+		Me.MenuStrip1.Size = New System.Drawing.Size(931, 24)
 		Me.MenuStrip1.TabIndex = 4
 		Me.MenuStrip1.Text = "MenuStrip1"
 		'
@@ -90,12 +87,12 @@ Partial Class mainfrm
 		'ToolStripSeparator1
 		'
 		Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-		Me.ToolStripSeparator1.Size = New System.Drawing.Size(149, 6)
+		Me.ToolStripSeparator1.Size = New System.Drawing.Size(89, 6)
 		'
 		'ExitToolStripMenuItem
 		'
 		Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-		Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+		Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(92, 22)
 		Me.ExitToolStripMenuItem.Text = "Exit"
 		'
 		'ViewToolStripMenuItem
@@ -114,9 +111,9 @@ Partial Class mainfrm
 		'StatusStrip1
 		'
 		Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1})
-		Me.StatusStrip1.Location = New System.Drawing.Point(0, 577)
+		Me.StatusStrip1.Location = New System.Drawing.Point(0, 592)
 		Me.StatusStrip1.Name = "StatusStrip1"
-		Me.StatusStrip1.Size = New System.Drawing.Size(758, 22)
+		Me.StatusStrip1.Size = New System.Drawing.Size(931, 22)
 		Me.StatusStrip1.TabIndex = 5
 		Me.StatusStrip1.Text = "StatusStrip1"
 		'
@@ -128,32 +125,36 @@ Partial Class mainfrm
 		'
 		'Label1
 		'
-		Me.Label1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-			Or System.Windows.Forms.AnchorStyles.Left) _
-			Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
 		Me.Label1.AutoSize = True
-		Me.Label1.Location = New System.Drawing.Point(536, 36)
+		Me.Label1.Location = New System.Drawing.Point(710, 36)
 		Me.Label1.Name = "Label1"
 		Me.Label1.Size = New System.Drawing.Size(61, 13)
 		Me.Label1.TabIndex = 6
-		Me.Label1.Text = "ScrollTimes"
-		Me.ToolTip1.SetToolTip(Me.Label1, "Amount of times to scroll for 1 second on page")
+		Me.Label1.Text = "ScrollItems:"
+		Me.ToolTip1.SetToolTip(Me.Label1, "Amount of items you want to be found by WishSorter")
 		'
 		'TextBox2
 		'
-		Me.TextBox2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-			Or System.Windows.Forms.AnchorStyles.Left) _
-			Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-		Me.TextBox2.Location = New System.Drawing.Point(603, 33)
+		Me.TextBox2.Location = New System.Drawing.Point(777, 33)
 		Me.TextBox2.Name = "TextBox2"
 		Me.TextBox2.Size = New System.Drawing.Size(62, 20)
 		Me.TextBox2.TabIndex = 7
+		'
+		'WebBrowser1
+		'
+		Me.WebBrowser1.Location = New System.Drawing.Point(931, 31)
+		Me.WebBrowser1.MinimumSize = New System.Drawing.Size(20, 20)
+		Me.WebBrowser1.Name = "WebBrowser1"
+		Me.WebBrowser1.Size = New System.Drawing.Size(793, 553)
+		Me.WebBrowser1.TabIndex = 8
 		'
 		'mainfrm
 		'
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-		Me.ClientSize = New System.Drawing.Size(758, 599)
+		Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+		Me.ClientSize = New System.Drawing.Size(931, 614)
+		Me.Controls.Add(Me.WebBrowser1)
 		Me.Controls.Add(Me.TextBox2)
 		Me.Controls.Add(Me.Label1)
 		Me.Controls.Add(Me.StatusStrip1)
@@ -161,7 +162,9 @@ Partial Class mainfrm
 		Me.Controls.Add(Me.TextBox1)
 		Me.Controls.Add(Me.Button1)
 		Me.Controls.Add(Me.MenuStrip1)
+		Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
 		Me.MainMenuStrip = Me.MenuStrip1
+		Me.MaximizeBox = False
 		Me.Name = "mainfrm"
 		Me.ShowIcon = False
 		Me.Text = "WishSorter"
@@ -188,4 +191,5 @@ Partial Class mainfrm
 	Friend WithEvents Label1 As Label
 	Friend WithEvents ToolTip1 As ToolTip
 	Friend WithEvents TextBox2 As TextBox
+	Friend WithEvents WebBrowser1 As WebBrowser
 End Class
