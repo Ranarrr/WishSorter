@@ -2,13 +2,19 @@
 	Dim FirstLogin As Boolean = False
 	Dim EnteredEmail As Boolean = False
 	Dim EnteredPass As Boolean = False
-	Dim listOfItems As String()
+	Dim toggle As Boolean = False
+
+	Dim isNavigating As Boolean = False
 
 	Public isLoggedIn As Boolean = False
+
+	Dim arrOfItems As String()
+	Dim listOfFreeItems As New List(Of String)
+
 	Public email As String
 	Public password As String
 
-	Public Sub wait(ByVal interval As Integer)
+	Public Sub wait(interval As Integer)
 		Dim stopW As New Stopwatch
 		stopW.Start()
 		Do While stopW.ElapsedMilliseconds < interval
@@ -32,14 +38,20 @@
 		Return result
 	End Function
 
-	Public Function GetPrice(fromidx As Integer, strparam As String, seperator As String) As String
+	Public Function GetPrice(fromidx As Integer, strparam As String) As String
 		Dim result As String = ""
-		If seperator = "" Or strparam = "" Then
+		If strparam = "" Then
 			Return result
 		End If
 
-		result = strparam.Insert(strparam.IndexOf("krNOK"), " ")
-		result = result.Split(seperator)(1)
+		If strparam.Contains("shipping") Then
+			result = strparam.Insert(strparam.IndexOf("krNOK"), " ")
+			result = result.Split(" ")(1)
+			result = result.Split(vbCrLf)(2)
+		Else
+			result = strparam.Insert(strparam.IndexOf("krNOK"), " ")
+			result = result.Split(" ")(1)
+		End If
 
 		Return result
 	End Function
@@ -54,26 +66,29 @@
 		Return result
 	End Function
 
+	Private Sub WaitForDoc()
+		wait(500)
+		Do While isNavigating
+			wait(500)
+		Loop
+	End Sub
+
 	Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 		Dim textboxtxt = TextBox1.Text()
+		arrOfItems = Nothing
+		ListBox1.Items.Clear()
 
 		ToolStripStatusLabel1.Text = "Status: Navigating .."
 
-		If Not Form2.Visible() Then
-			Form2.Show()
-			wait(200)
-			Form2.WebBrowser1.Navigate("https://www.wish.com/")
-		Else
-			Form2.WebBrowser1.Navigate("https://www.wish.com/")
-		End If
+		WebBrowser1.Navigate("https://www.wish.com/")
 
-		wait(3000)
+		WaitForDoc()
 
 		If isLoggedIn Then
 			ToolStripStatusLabel1.Text = "Status: Already logged in!"
 			GoTo goSearch
 		Else
-			For Each elemnt As HtmlElement In Form2.WebBrowser1.Document.GetElementsByTagName("div")
+			For Each elemnt As HtmlElement In WebBrowser1.Document.GetElementsByTagName("div")
 				If InStr(elemnt.GetAttribute("classname"), "profile-pic-cont left") Then
 					ToolStripStatusLabel1.Text = "Status: Already logged in!"
 					isLoggedIn = True
@@ -83,11 +98,11 @@
 		End If
 
 		Button1.Enabled = False
-		wait(1000)
+		WaitForDoc()
 		ToolStripStatusLabel1.Text = "Status: Waiting Logging in"
 		Button1.Enabled = True
 
-		For Each elemnt As HtmlElement In Form2.WebBrowser1.Document.GetElementsByTagName("div")
+		For Each elemnt As HtmlElement In WebBrowser1.Document.GetElementsByTagName("div")
 			If InStr(elemnt.GetAttribute("classname"), "email-login-btn btn") Then
 				elemnt.InvokeMember("Click")
 				elemnt.InvokeMember("MouseDown")
@@ -98,20 +113,20 @@
 				FirstLogin = True
 			End If
 		Next
-		wait(200)
+		wait(300)
 		If email = "" Or password = "" Then
 			loginForm.Show()
 			ToolStripStatusLabel1.Text = "Status: Waiting for user to input login information.."
 		End If
 
 		While email = ""
-			wait(4000)
+			wait(2000)
 		End While
 		ToolStripStatusLabel1.Text = "Status: Login information retrieved.."
 		wait(200)
 		ToolStripStatusLabel1.Text = "Status: Waiting . Logging in ."
 
-		For Each formlogin As HtmlElement In Form2.WebBrowser1.Document.GetElementsByTagName("input")
+		For Each formlogin As HtmlElement In WebBrowser1.Document.GetElementsByTagName("input")
 			If formlogin.Id = "login-email" Then
 				wait(200)
 				formlogin.SetAttribute("value", email)
@@ -126,7 +141,7 @@
 			End If
 		Next
 		wait(200)
-		For Each loginbutton As HtmlElement In Form2.WebBrowser1.Document.GetElementsByTagName("button")
+		For Each loginbutton As HtmlElement In WebBrowser1.Document.GetElementsByTagName("button")
 			If InStr(loginbutton.GetAttribute("classname"), "submit-btn btn") Then
 				loginbutton.InvokeMember("Click")
 				loginbutton.InvokeMember("MouseDown")
@@ -153,38 +168,69 @@
 		End If
 
 goSearch:
-		wait(2000)
+		WaitForDoc()
 
 		ToolStripStatusLabel1.Text = "Status: Continuing to search for " + textboxtxt + " .."
-		Form2.WebBrowser1.Navigate("https://www.wish.com/search/" + textboxtxt)
+		WebBrowser1.Navigate("https://www.wish.com/search/" + textboxtxt)
 		ToolStripStatusLabel1.Text = "Status: Searched!"
 
-		wait(2000)
+		WaitForDoc()
 
 		Dim amountOfItems As Integer = 0
 
-		While amountOfItems <= Integer.Parse(TextBox2.Text)
-			Form2.WebBrowser1.Navigate("javascript:window.scroll(0,document.body.scrollHeight);")
-			wait(200)
-			amountOfItems = amountOfItems + 25
+		ToolStripStatusLabel1.Text = "Status: Scrolling " + TextBox2.Text + " items into view"
+
+		Try
+			amountOfItems = Integer.Parse(TextBox2.Text)
+		Catch ex As Exception
+		End Try
+
+		While amountOfItems
+			WebBrowser1.Navigate("javascript:window.scroll(0,document.body.scrollHeight);")
+			wait(300)
+			amountOfItems = amountOfItems - 25
 		End While
 
-		ToolStripStatusLabel1.Text = "Status: Parsing .."
+		ToolStripStatusLabel1.Text = "Status: Parsing all .."
 
-		For Each items As HtmlElement In Form2.WebBrowser1.Document.GetElementsByTagName("div")
+		For Each items As HtmlElement In WebBrowser1.Document.GetElementsByTagName("div")
 			If InStr(items.GetAttribute("classname"), "feed-actual-price") Then
 				If Not items.InnerText = "" Then
 					For Each link As HtmlElement In items.Parent.Parent.Parent.GetElementsByTagName("a")
-						ListBox1.Items.Add("pris: " + IIf(items.InnerText.Contains("Gratis"), "0krNOK", items.InnerText.Replace(" ", "")) + " Link: " + link.GetAttribute("href"))
+						If items.InnerText.Contains("Gratis") Then
+							listOfFreeItems.Add(link.GetAttribute("href"))
+						Else
+							ListBox1.Items.Add("pris: " + items.InnerText.Replace(" ", "") + " Link: " + link.GetAttribute("href"))
+						End If
 						Exit For
 					Next
 				End If
 			End If
 		Next
 
-		listOfItems = (From item1 As String In ListBox1.Items Order By Integer.Parse(GetPrice(6, item1, " ")) Ascending Select item1).ToArray()
+		wait(400)
+
+		ToolStripStatusLabel1.Text = "Status: Parsing free items .."
+
+		For Each item As String In listOfFreeItems
+			WebBrowser1.Navigate(item)
+			WaitForDoc()
+			For Each htmlitem As HtmlElement In WebBrowser1.Document.GetElementsByTagName("div")
+				If InStr(htmlitem.GetAttribute("classname"), "shipping-details details-section") Then
+					If InStr(htmlitem.InnerText, "levering") Then
+						Dim tempstr As String = htmlitem.InnerText
+						tempstr = tempstr.Replace("Antatt levering", "")
+						tempstr = tempstr.Replace(" ", "")
+						ListBox1.Items.Add("pris: " + tempstr + " shipping" + " Link: " + item)
+						Exit For
+					End If
+				End If
+			Next
+		Next
+
+		arrOfItems = (From item1 As String In ListBox1.Items Order By Integer.Parse(GetPrice(6, item1)) Ascending Select item1).ToArray()
 		ListBox1.Items.Clear()
-		ListBox1.Items.AddRange(listOfItems)
+		ListBox1.Items.AddRange(arrOfItems)
 
 		ToolStripStatusLabel1.Text = "Status: Done!"
 		wait(500)
@@ -196,17 +242,32 @@ goSearch:
 	End Sub
 
 	Private Sub WebbrowserToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WebbrowserToolStripMenuItem.Click
-		Form2.Show()
+		If toggle Then
+			Me.Width = Me.Width - 804
+			toggle = False
+		Else
+			Me.Width = Me.Width + 804
+			toggle = True
+		End If
 	End Sub
 
 	Private Sub mainfrm_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
 		StatusStrip1.Text = "Status: Idle"
-		If Not isLoggedIn Then
+		If Not isLoggedIn Or email = "" Then
 			loginForm.Show()
 		End If
 	End Sub
 
 	Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
 		Application.Exit()
+	End Sub
+
+	Private Sub WebBrowser1_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs) Handles WebBrowser1.DocumentCompleted
+		wait(500)
+		isNavigating = False
+	End Sub
+
+	Private Sub WebBrowser1_Navigating(sender As Object, e As WebBrowserNavigatingEventArgs) Handles WebBrowser1.Navigating
+		isNavigating = True
 	End Sub
 End Class
