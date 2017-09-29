@@ -1,0 +1,185 @@
+﻿Public Class Functions
+	Public Shared FunctionsObject As Functions = New Functions
+
+	Public Function GetCurrencyString(ByVal currencyStr As String) As String
+		Select Case currencyStr
+			Case "NOK"
+				Return "krNOK"
+			Case "CAD"
+				Return "$CAD"
+			Case "BRL"
+				Return "R$BRL"
+			Case "AED"
+				Return "د.إ.‏AED"
+			Case "ALL"
+				Return "LekëALL"
+			Case "ARS"
+				Return "$ARS"
+			Case "AUD"
+				Return "$AUD"
+			Case "BAM"
+				Return "KMBAM"
+			Case "BBD"
+				Return "$BBD"
+			Case "BGN"
+				Return "лв.BGN"
+			Case "BMD"
+				Return "$BMD"
+			Case "BRL"
+				Return "R$BRL"
+			Case "CHF"
+				Return "CHFCHF"
+			Case "CLP"
+				Return "$CLP"
+			Case "CLP"
+				Return "$CLP"
+			Case "COP"
+				Return "$COP"
+			Case "CRC"
+				Return "₡CRC"
+			Case "CZK"
+				Return "KčCZK"
+			Case "DKK"
+				Return "kr.DKK"
+			Case "DOP"
+				Return "RD$DOP"
+			Case "EGP"
+				Return "ج.م.‏EGP"
+			Case "EUR"
+				Return "€EUR"
+			Case "GBP"
+				Return "£GBP"
+			Case "HKD"
+				Return "HK$HKD"
+			Case "HRK"
+				Return "HRKHRK"
+			Case "HUF"
+				Return "FtHUF"
+			Case "IDR"
+				Return "RpIDR"
+			Case "ILS"
+				Return "₪ILS"
+			Case "INR"
+				Return "₹INR"
+			Case "JMD"
+				Return "$JMD"
+			Case "JOD"
+				Return "د.أ.‏JOD"
+			Case "JPY"
+				Return "￥JPY"
+			Case "KRW"
+				Return "₩KRW"
+			Case "KWD"
+				Return "د.ك.‏KWD"
+			Case "MAD"
+				Return "د.م.‏MAD"
+			Case "MDL"
+				Return "LMDL"
+			Case "MXN"
+				Return "$MXN"
+			Case "MYR"
+				Return "RMMYR"
+			Case "NZD"
+				Return "$NZD"
+			Case "PEN"
+				Return "S/.PEN"
+			Case "PHP"
+				Return "₱PHP"
+			Case "PKR"
+				Return "RsPKR"
+			Case "PLN"
+				Return "złPLN"
+			Case "RON"
+				Return "RONRON"
+			Case "RSD"
+				Return "RSDRSD"
+			Case "RUB"
+				Return "₽RUB"
+			Case "SAR"
+				Return "ر.س.‏SAR"
+			Case "SEK"
+				Return "krSEK"
+			Case "SGD"
+				Return "$SGD"
+			Case "THB"
+				Return "THBTHB"
+			Case "TRY"
+				Return "₺TRY"
+			Case "TWD"
+				Return "$TWD"
+			Case "UAH"
+				Return "₴UAH"
+			Case "USD"
+				Return "$"
+			Case "VEF"
+				Return "Bs.VEF"
+			Case "VND"
+				Return "₫VND"
+			Case "ZAR"
+				Return "RZAR"
+		End Select
+		Return ""
+	End Function
+
+	Public Function SortWishItemByPrice(ByVal listOfItems As List(Of WishItem)) As List(Of WishItem)
+		Return (From item As WishItem In listOfItems Order By item.getsetPrice Ascending Select item).ToList()
+	End Function
+
+	'Needs the innerhtml of "feed-product-item".
+	Public Function GetImageLink(strparam As String) As String
+		Dim result As String = ""
+		If strparam = "" Then
+			Return result
+		End If
+
+		Dim startidx As Integer = strparam.IndexOf("http")
+		Dim endidx As Integer = strparam.IndexOf(");'") - 1
+
+		result = GetStringInRange(startidx, endidx, strparam)
+
+		Return result
+	End Function
+
+	Public Function GetStringInRange(fromidx As Integer, toidx As Integer, strparam As String) As String
+		Dim result As String = ""
+		If fromidx > toidx Then
+			Return result
+		ElseIf toidx > strparam.Length Then
+			Return result
+		ElseIf toidx < 0 Or fromidx < 0 Then
+			Return result
+		End If
+
+		result = strparam.Remove(0, fromidx)
+		result = result.Remove(toidx - fromidx, strparam.Length - toidx)
+		Return result
+	End Function
+
+	Public Function GetPrice(fromidx As Integer, strparam As String) As String
+		Dim result As String = ""
+		If strparam = "" Then
+			Return result
+		End If
+
+		If strparam.Contains("shipping") Then
+			result = strparam.Insert(strparam.IndexOf("krNOK"), " ")
+			result = result.Split(" ")(1)
+			result = result.Split(vbCrLf)(2)
+		Else
+			result = strparam.Insert(strparam.IndexOf("krNOK"), " ")
+			result = result.Split(" ")(1)
+		End If
+
+		Return result
+	End Function
+
+	Public Function GetLink(strparam As String) As String
+		Dim result As String = ""
+
+		result = strparam.Split("Link:")(1)
+		result = result.Remove(0, 5)
+		result.Trim()
+
+		Return result
+	End Function
+End Class

@@ -1,14 +1,19 @@
-﻿Public Class mainfrm
+﻿Imports WishSorter.WishItem
+Imports WishSorter.Functions
+
+Public Class mainfrm
 	Dim FirstLogin As Boolean = False
 	Dim EnteredEmail As Boolean = False
 	Dim EnteredPass As Boolean = False
-	Dim toggle As Boolean = False
+	Dim toggleWebbrowser As Boolean = False
 
 	Dim isNavigating As Boolean = False
 
 	Public isLoggedIn As Boolean = False
 
-	Dim arrOfItems As String()
+	Dim listOfItems As List(Of WishItem) = New List(Of WishItem)
+
+	Dim currencyStr As String
 	Dim listOfFreeItems As New List(Of String)
 
 	Public email As String
@@ -23,49 +28,6 @@
 		stopW.Stop()
 	End Sub
 
-	Public Function GetStringInRange(fromidx As Integer, toidx As Integer, strparam As String) As String
-		Dim result As String = ""
-		If fromidx > toidx Then
-			Return result
-		ElseIf toidx > strparam.Length Then
-			Return result
-		ElseIf toidx < 0 Or fromidx < 0 Then
-			Return result
-		End If
-
-		result = strparam.Remove(0, fromidx)
-		result = result.Remove(toidx - fromidx, strparam.Length - toidx)
-		Return result
-	End Function
-
-	Public Function GetPrice(fromidx As Integer, strparam As String) As String
-		Dim result As String = ""
-		If strparam = "" Then
-			Return result
-		End If
-
-		If strparam.Contains("shipping") Then
-			result = strparam.Insert(strparam.IndexOf("krNOK"), " ")
-			result = result.Split(" ")(1)
-			result = result.Split(vbCrLf)(2)
-		Else
-			result = strparam.Insert(strparam.IndexOf("krNOK"), " ")
-			result = result.Split(" ")(1)
-		End If
-
-		Return result
-	End Function
-
-	Public Function GetHTML(strparam As String) As String
-		Dim result As String = ""
-
-		result = strparam.Split("Link:")(1)
-		result = result.Remove(0, 5)
-		result.Trim()
-
-		Return result
-	End Function
-
 	Private Sub WaitForDoc()
 		wait(500)
 		Do While isNavigating
@@ -75,7 +37,10 @@
 
 	Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 		Dim textboxtxt = TextBox1.Text()
-		arrOfItems = Nothing
+		If listOfItems.Count > 0 Then
+			listOfItems.Clear()
+		End If
+
 		ListBox1.Items.Clear()
 
 		ToolStripStatusLabel1.Text = "Status: Navigating .."
@@ -83,6 +48,21 @@
 		WebBrowser1.Navigate("https://www.wish.com/")
 
 		WaitForDoc()
+
+		ToolStripStatusLabel1.Text = "Status: Getting currency .."
+
+		For Each spanTag As HtmlElement In WebBrowser1.Document.GetElementsByTagName("span")
+			If InStr(spanTag.GetAttribute("classname"), "currency-subscript") Then
+				currencyStr = FunctionsObject.GetCurrencyString(spanTag.InnerText)
+				Exit For
+			End If
+		Next
+
+		wait(300)
+
+		ToolStripStatusLabel1.Text = "Status: Currency retrieved! You use " + currencyStr
+
+		wait(500)
 
 		If isLoggedIn Then
 			ToolStripStatusLabel1.Text = "Status: Already logged in!"
@@ -198,9 +178,9 @@ goSearch:
 				If Not items.InnerText = "" Then
 					For Each link As HtmlElement In items.Parent.Parent.Parent.GetElementsByTagName("a")
 						If items.InnerText.Contains("Gratis") Then
-							listOfFreeItems.Add(link.GetAttribute("href"))
+							listOfFreeItems.Add(link.GetAttribute("href") + " " + FunctionsObject.GetImageLink(items.Parent.Parent.Parent.InnerHtml))
 						Else
-							ListBox1.Items.Add("pris: " + items.InnerText.Replace(" ", "") + " Link: " + link.GetAttribute("href"))
+							listOfItems.Add(New WishItem(link.GetAttribute("href"), items.InnerText.Replace(" " + currencyStr, ""), False, FunctionsObject.GetImageLink(items.Parent.Parent.Parent.InnerHtml)))
 						End If
 						Exit For
 					Next
@@ -213,7 +193,7 @@ goSearch:
 		ToolStripStatusLabel1.Text = "Status: Parsing free items .."
 
 		For Each item As String In listOfFreeItems
-			WebBrowser1.Navigate(item)
+			WebBrowser1.Navigate(item.Split(" ")(0))
 			WaitForDoc()
 			For Each htmlitem As HtmlElement In WebBrowser1.Document.GetElementsByTagName("div")
 				If InStr(htmlitem.GetAttribute("classname"), "shipping-details details-section") Then
@@ -221,16 +201,21 @@ goSearch:
 						Dim tempstr As String = htmlitem.InnerText
 						tempstr = tempstr.Replace("Antatt levering", "")
 						tempstr = tempstr.Replace(" ", "")
-						ListBox1.Items.Add("pris: " + tempstr + " shipping" + " Link: " + item)
+						tempstr = tempstr.Replace(currencyStr, "")
+						listOfItems.Add(New WishItem(item.Split(" ")(0), tempstr, True, item.Split(" ")(1)))
 						Exit For
 					End If
 				End If
 			Next
 		Next
 
-		arrOfItems = (From item1 As String In ListBox1.Items Order By Integer.Parse(GetPrice(6, item1)) Ascending Select item1).ToArray()
-		ListBox1.Items.Clear()
-		ListBox1.Items.AddRange(arrOfItems)
+		For Each item As WishItem In FunctionsObject.SortWishItemByPrice(listOfItems)
+			If item.getsetIsFree Then
+				ListBox1.Items.Add("pris: " + item.getsetPrice.ToString() + " " + currencyStr + " shipping | Link: " + item.getsetLinkSite)
+			Else
+				ListBox1.Items.Add("pris: " + item.getsetPrice.ToString() + " " + currencyStr + " | Link: " + item.getsetLinkSite)
+			End If
+		Next
 
 		ToolStripStatusLabel1.Text = "Status: Done!"
 		wait(500)
@@ -238,16 +223,16 @@ goSearch:
 	End Sub
 
 	Private Sub ListBox1_DoubleClick(sender As Object, e As EventArgs) Handles ListBox1.DoubleClick
-		Process.Start(GetHTML(ListBox1.GetItemText(ListBox1.SelectedItem)))
+		Process.Start(FunctionsObject.GetLink(ListBox1.GetItemText(ListBox1.SelectedItem)))
 	End Sub
 
 	Private Sub WebbrowserToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WebbrowserToolStripMenuItem.Click
-		If toggle Then
+		If toggleWebbrowser Then
 			Me.Width = Me.Width - 804
-			toggle = False
+			toggleWebbrowser = False
 		Else
 			Me.Width = Me.Width + 804
-			toggle = True
+			toggleWebbrowser = True
 		End If
 	End Sub
 

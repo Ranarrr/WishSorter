@@ -72,6 +72,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="classes\Functions.vb" />
+    <Compile Include="classes\WishItem.vb" />
     <Compile Include="Forms\Form1.vb">
       <SubType>Form</SubType>
     </Compile>

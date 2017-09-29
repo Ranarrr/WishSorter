@@ -38,6 +38,8 @@ Partial Class mainfrm
 		Me.TextBox2 = New System.Windows.Forms.TextBox()
 		Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
 		Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
+		Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
+		Me.ListView1 = New System.Windows.Forms.ListView()
 		Me.MenuStrip1.SuspendLayout()
 		Me.StatusStrip1.SuspendLayout()
 		Me.SuspendLayout()
@@ -47,7 +49,7 @@ Partial Class mainfrm
 		Me.Button1.Location = New System.Drawing.Point(845, 31)
 		Me.Button1.Name = "Button1"
 		Me.Button1.Size = New System.Drawing.Size(75, 23)
-		Me.Button1.TabIndex = 0
+		Me.Button1.TabIndex = 2
 		Me.Button1.Text = "Search"
 		Me.Button1.UseVisualStyleBackColor = True
 		'
@@ -56,7 +58,7 @@ Partial Class mainfrm
 		Me.TextBox1.Location = New System.Drawing.Point(12, 33)
 		Me.TextBox1.Name = "TextBox1"
 		Me.TextBox1.Size = New System.Drawing.Size(692, 20)
-		Me.TextBox1.TabIndex = 1
+		Me.TextBox1.TabIndex = 0
 		'
 		'ListBox1
 		'
@@ -65,8 +67,8 @@ Partial Class mainfrm
 		Me.ListBox1.FormattingEnabled = True
 		Me.ListBox1.Location = New System.Drawing.Point(12, 60)
 		Me.ListBox1.Name = "ListBox1"
-		Me.ListBox1.Size = New System.Drawing.Size(908, 524)
-		Me.ListBox1.TabIndex = 2
+		Me.ListBox1.Size = New System.Drawing.Size(296, 524)
+		Me.ListBox1.TabIndex = 3
 		'
 		'MenuStrip1
 		'
@@ -74,7 +76,7 @@ Partial Class mainfrm
 		Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
 		Me.MenuStrip1.Name = "MenuStrip1"
 		Me.MenuStrip1.Size = New System.Drawing.Size(931, 24)
-		Me.MenuStrip1.TabIndex = 4
+		Me.MenuStrip1.TabIndex = 222
 		Me.MenuStrip1.Text = "MenuStrip1"
 		'
 		'FileToolStripMenuItem
@@ -87,12 +89,12 @@ Partial Class mainfrm
 		'ToolStripSeparator1
 		'
 		Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-		Me.ToolStripSeparator1.Size = New System.Drawing.Size(89, 6)
+		Me.ToolStripSeparator1.Size = New System.Drawing.Size(149, 6)
 		'
 		'ExitToolStripMenuItem
 		'
 		Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-		Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(92, 22)
+		Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
 		Me.ExitToolStripMenuItem.Text = "Exit"
 		'
 		'ViewToolStripMenuItem
@@ -105,7 +107,7 @@ Partial Class mainfrm
 		'WebbrowserToolStripMenuItem
 		'
 		Me.WebbrowserToolStripMenuItem.Name = "WebbrowserToolStripMenuItem"
-		Me.WebbrowserToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
+		Me.WebbrowserToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
 		Me.WebbrowserToolStripMenuItem.Text = "Webbrowser"
 		'
 		'StatusStrip1
@@ -129,7 +131,7 @@ Partial Class mainfrm
 		Me.Label1.Location = New System.Drawing.Point(710, 36)
 		Me.Label1.Name = "Label1"
 		Me.Label1.Size = New System.Drawing.Size(61, 13)
-		Me.Label1.TabIndex = 6
+		Me.Label1.TabIndex = 231
 		Me.Label1.Text = "ScrollItems:"
 		Me.ToolTip1.SetToolTip(Me.Label1, "Amount of items you want to be found by WishSorter")
 		'
@@ -138,7 +140,7 @@ Partial Class mainfrm
 		Me.TextBox2.Location = New System.Drawing.Point(777, 33)
 		Me.TextBox2.Name = "TextBox2"
 		Me.TextBox2.Size = New System.Drawing.Size(62, 20)
-		Me.TextBox2.TabIndex = 7
+		Me.TextBox2.TabIndex = 1
 		'
 		'WebBrowser1
 		'
@@ -148,12 +150,27 @@ Partial Class mainfrm
 		Me.WebBrowser1.Size = New System.Drawing.Size(793, 553)
 		Me.WebBrowser1.TabIndex = 8
 		'
+		'ImageList1
+		'
+		Me.ImageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit
+		Me.ImageList1.ImageSize = New System.Drawing.Size(100, 100)
+		Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
+		'
+		'ListView1
+		'
+		Me.ListView1.Location = New System.Drawing.Point(382, 60)
+		Me.ListView1.Name = "ListView1"
+		Me.ListView1.Size = New System.Drawing.Size(537, 524)
+		Me.ListView1.TabIndex = 4
+		Me.ListView1.UseCompatibleStateImageBehavior = False
+		'
 		'mainfrm
 		'
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
 		Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
 		Me.ClientSize = New System.Drawing.Size(931, 614)
+		Me.Controls.Add(Me.ListView1)
 		Me.Controls.Add(Me.WebBrowser1)
 		Me.Controls.Add(Me.TextBox2)
 		Me.Controls.Add(Me.Label1)
@@ -192,4 +209,6 @@ Partial Class mainfrm
 	Friend WithEvents ToolTip1 As ToolTip
 	Friend WithEvents TextBox2 As TextBox
 	Friend WithEvents WebBrowser1 As WebBrowser
+	Friend WithEvents ImageList1 As ImageList
+	Friend WithEvents ListView1 As ListView
 End Class
