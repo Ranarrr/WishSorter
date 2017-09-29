@@ -1,6 +1,6 @@
 # WishSorter
 
-- This is a program to help sort the prices in wish (https://wish.com)
+- This is a program to help sort the prices on wish (https://wish.com)
 - This is not a finished product. (Please check the TODO-list)
 - **This only works for the Norwegian crown (NOK) (Please make an issue on this git if you want your own currency to work with this program)**
 - Do not worry, this program will not (NEVER!) buy any item on wish using your credentials.
