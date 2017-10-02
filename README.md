@@ -9,7 +9,7 @@
 # TODO-list
 
 - <s>Get currency dynamically for all users</s>
-- Get pictures of items in an imagelist to be shown
+- <s>Get pictures of items in an imagelist to be shown</s>
 - Make program independent of a webbrowser control (HTTPRequest)
 - Make saving credentials locally a thing
 - Improve performance (by amount of RAM it uses)
