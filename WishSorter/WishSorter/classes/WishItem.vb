@@ -1,9 +1,10 @@
-﻿Public Class WishItem
+﻿Imports WishSorter.Functions
+
+Public Class WishItem
 	Private LinkToSite As String
 	Private priceOfItem As Integer
 	Private isItemFree As Boolean
 	Private LinkToImage As String
-	Private ImageOfItem As Image
 
 	Public Sub New(ByVal link As String, price As Integer, isFree As Boolean, linkImage As String)
 		LinkToSite = link
@@ -45,15 +46,6 @@
 		End Get
 		Set(value As String)
 			LinkToImage = value
-		End Set
-	End Property
-
-	Property getsetImage() As Image
-		Get
-			Return ImageOfItem
-		End Get
-		Set(value As Image)
-			ImageOfItem = value
 		End Set
 	End Property
 End Class

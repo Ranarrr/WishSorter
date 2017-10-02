@@ -122,7 +122,7 @@
 	End Function
 
 	Public Function SortWishItemByPrice(ByVal listOfItems As List(Of WishItem)) As List(Of WishItem)
-		Return (From item As WishItem In listOfItems Order By item.getsetPrice Ascending Select item).ToList()
+		Return (From item As WishItem In listOfItems Order By item.getsetPrice Descending Select item).ToList()
 	End Function
 
 	'Needs the innerhtml of "feed-product-item".
