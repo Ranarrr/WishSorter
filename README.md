@@ -5,6 +5,7 @@
 - <s>**This only works for the Norwegian crown (NOK) (Please make an issue on this git if you want your own currency to work with this program)**</s>
 - Do not worry, this program will not (NEVER!) buy any item on wish using your credentials.
 - If you find any problems with this program not listed in the TODO-list, please make an issue on this git, thank you :)
+- This program can be very slow if it is to process many items, so hang on tight if it takes a long time.
 
 # TODO-list
 
