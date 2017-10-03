@@ -7,13 +7,9 @@ Public Class mainfrm
 	Dim EnteredPass As Boolean = False
 	Dim toggleWebbrowser As Boolean = False
 
-	Dim GroupBoxGraphics As Graphics
-
 	Dim isNavigating As Boolean = False
 
 	Public isLoggedIn As Boolean = False
-
-	Dim listviewGraphics As Graphics
 
 	Dim listOfItems As List(Of WishItem) = New List(Of WishItem)
 
@@ -35,7 +31,7 @@ Public Class mainfrm
 	Private Sub WaitForDoc()
 		wait(500)
 		Do While isNavigating
-			wait(500)
+			wait(200)
 		Loop
 	End Sub
 
@@ -143,18 +139,23 @@ Public Class mainfrm
 goSearch:
 		WaitForDoc()
 
+		wait(400)
+
 		ToolStripStatusLabel1.Text = "Status: Getting currency .."
 
 		For Each spanTag As HtmlElement In WebBrowser1.Document.GetElementsByTagName("span")
 			If InStr(spanTag.GetAttribute("classname"), "currency-subscript") Then
+				wait(300)
 				currencyStr = FunctionsObject.GetCurrencyString(spanTag.InnerText)
+				ToolStripStatusLabel1.Text = "Status: Currency retrieved! You use " + currencyStr
 				Exit For
 			End If
 		Next
 
-		wait(300)
-
-		ToolStripStatusLabel1.Text = "Status: Currency retrieved! You use " + currencyStr
+		If currencyStr = "" Then
+			ToolStripStatusLabel1.Text = "Status: Failed to retrieve currency!"
+			GoTo goFailCurrency
+		End If
 
 		wait(300)
 
@@ -169,11 +170,11 @@ goSearch:
 		ToolStripStatusLabel1.Text = "Status: Scrolling " + TextBox2.Text + " items into view"
 
 		Try
-			amountOfItems = Integer.Parse(TextBox2.Text)
+			amountOfItems = Integer.Parse(TextBox2.Text) * 1.5
 		Catch ex As Exception
 		End Try
 
-		While amountOfItems
+		While amountOfItems > 0
 			WebBrowser1.Navigate("javascript:window.scroll(0,document.body.scrollHeight);")
 			wait(300)
 			amountOfItems = amountOfItems - 25
@@ -199,10 +200,15 @@ goSearch:
 		wait(400)
 
 		Dim paidStuffCount As Integer = listOfItems.Count
+		Dim tStart As DateTime
+		Dim tSpent As TimeSpan
+		Dim itemIdx As Integer = 0
+		Dim tEstimate As Integer = 0
 
-		ToolStripStatusLabel1.Text = "Status: Parsing free items .."
-
+		ToolStripStatusLabel1.Text = "Status: Parsing free items .. Please wait .. "
 		For Each item As String In listOfFreeItems
+			itemIdx = itemIdx + 1
+			tStart = Now
 			WebBrowser1.Navigate(item.Split(" ")(0))
 			WaitForDoc()
 			For Each htmlitem As HtmlElement In WebBrowser1.Document.GetElementsByTagName("div")
@@ -217,6 +223,9 @@ goSearch:
 					End If
 				End If
 			Next
+			tSpent = Now.Subtract(tStart)
+			tEstimate = tSpent.TotalMilliseconds
+			ToolStripStatusLabel1.Text = "Status: Parsing free items .. Please wait .. " + FunctionsObject.GetStringTime((tEstimate * listOfFreeItems.Count) - (tEstimate * itemIdx), True)
 		Next
 
 		GroupBox1.Text = "Items found " + paidStuffCount.ToString() + " | " + (listOfItems.Count - paidStuffCount).ToString() + " free stuff"
@@ -227,19 +236,19 @@ goSearch:
 			Dim TextUnderPic As New Label
 
 			With TextUnderPic
-				.Text = IIf(item.getsetIsFree, "Free " + item.getsetPrice.ToString() + " " + currencyStr + vbNewLine + " shipping", item.getsetPrice.ToString() + " " + currencyStr)
+				.Text = IIf(item.getsetIsFree, "Free " + item.getsetPrice.ToString() + " " + currencyStr + vbNewLine + "shipping", item.getsetPrice.ToString() + " " + currencyStr)
 				.Name = item.getsetLinkSite
-				.Location = New Point(0, 75)
-				.Width = 78
-				.Height = 35
+				.Location = New Point(0, 82)
+				.Width = 82
+				.Height = 30
 			End With
 
 			With picToMake
 				.Name = item.getsetLinkImage
 				.Image = New Bitmap(New IO.MemoryStream(New System.Net.WebClient().DownloadData(item.getsetLinkImage)))
-				.Size = New Size(75, 75)
+				.Size = New Size(82, 82)
 				.Margin = New Padding(.Margin.Left, 0, .Margin.Right, 0)
-				.SetBounds(.Location.X, .Location.Y, 75, 105)
+				.SetBounds(.Location.X, .Location.Y, 82, 112)
 				.SizeMode = PictureBoxSizeMode.Zoom
 			End With
 
@@ -251,13 +260,18 @@ goSearch:
 
 			AddHandler TextUnderPic.DoubleClick, AddressOf ClickedText
 			AddHandler picToMake.DoubleClick, AddressOf ClickedPic
-
-			picToMake.DrawToBitmap(New Bitmap(GroupBox1.Width, GroupBox1.Height, GroupBoxGraphics), New Rectangle(GroupBox1.Location.X, GroupBox1.Location.Y, GroupBox1.Width, GroupBox1.Height))
 		Next
 
 		ToolStripStatusLabel1.Text = "Status: Done!"
-			wait(500)
+		wait(500)
+		ToolStripStatusLabel1.Text = "Status: Cleaning up .."
+		WebBrowser1.Navigate("http://www.blankwebsite.com/")
+		listOfFreeItems.Clear()
+		GC.Collect()
+		wait(500)
 		ToolStripStatusLabel1.Text = "Status: Idle"
+goFailCurrency:
+
 	End Sub
 
 	Private Sub ClickedText(ByVal sender As Object, ByVal e As EventArgs)
@@ -308,9 +322,5 @@ goSearch:
 
 	Private Sub WebBrowser1_Navigating(sender As Object, e As WebBrowserNavigatingEventArgs) Handles WebBrowser1.Navigating
 		isNavigating = True
-	End Sub
-
-	Private Sub mainfrm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-		GroupBoxGraphics = GroupBox1.CreateGraphics()
 	End Sub
 End Class

@@ -1,6 +1,40 @@
 ﻿Public Class Functions
 	Public Shared FunctionsObject As Functions = New Functions
 
+	Public Function GetDecimal(ByVal param As Double) As Double
+		Dim result As Double = 0.0
+		Dim tempstr As String
+
+		tempstr = param.ToString()
+
+		tempstr = tempstr.Split(".")(1)
+		tempstr = "0." + tempstr
+		result = Double.Parse(tempstr)
+
+		Return result
+	End Function
+
+	Public Function GetStringTime(ByVal time As Integer, ByVal abbreviate As Boolean) As String
+		If time >= 1000 Then
+			If (time / 1000) >= 60 Then
+				If ((time / 1000) / 60) >= 60 Then
+					Return "Just close the application, please."
+				Else
+					Dim decimalToUse As Double = GetDecimal(((time / 1000) / 60).ToString())
+					Dim timeAsResult As String = (((time / 1000) / 60) - decimalToUse).ToString()
+					Return IIf(abbreviate, timeAsResult + "m " + (decimalToUse * 60).ToString("#####.#") + "s", timeAsResult + " minute(s) " + (decimalToUse * 60).ToString("#####.#") + " second(s)")
+				End If
+			Else
+				Dim decimalToUse As Double = GetDecimal((time / 1000).ToString())
+				Dim timeAsResult As String = ((time / 1000) - decimalToUse).ToString()
+				Return IIf(abbreviate, timeAsResult + "s " + (decimalToUse * 1000).ToString() + "ms", timeAsResult + " second(s) " + (decimalToUse * 1000).ToString() + " milliseconds")
+			End If
+		Else
+			Return IIf(abbreviate, time.ToString() + "ms", time.ToString() + " millisecond(s)")
+		End If
+		Return ""
+	End Function
+
 	Public Function GetCurrencyString(ByVal currencyStr As String) As String
 		Select Case currencyStr
 			Case "NOK"
