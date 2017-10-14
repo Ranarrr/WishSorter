@@ -6,14 +6,20 @@ Public Class WishItem
 	Private isItemFree As Boolean
 	Private LinkToImage As String
 
-	Public Sub New(ByVal link As String, price As Integer, isFree As Boolean, linkImage As String)
-		LinkToSite = link
-		priceOfItem = price
-		isItemFree = isFree
-		LinkToImage = linkImage
-	End Sub
+    Public Sub New(ByVal link As String, price As String, isFree As Boolean, linkImage As String)
+        LinkToSite = link
 
-	Property getsetLinkSite() As String
+        If price.Contains(" ") Then
+            priceOfItem = Val(price.Replace(" ", ""))
+        Else
+            priceOfItem = price
+        End If
+
+        isItemFree = isFree
+            LinkToImage = linkImage
+    End Sub
+
+    Property getsetLinkSite() As String
 		Get
 			Return LinkToSite
 		End Get
