@@ -1,20 +1,33 @@
 ﻿Public Class Functions
 	Public Shared FunctionsObject As Functions = New Functions
 
-	Public Function GetDecimal(ByVal param As Double) As Double
-		Dim result As Double = 0.0
-		Dim tempstr As String
+    Public Function GetDecimal(ByVal param As Double) As Double
+        Dim result As Double = 0.0
+        Dim tempstr As String
 
-		tempstr = param.ToString()
+        tempstr = param.ToString()
 
-		tempstr = tempstr.Split(".")(1)
-		tempstr = "0." + tempstr
-		result = Double.Parse(tempstr)
+        tempstr = tempstr.Split(".")(1)
+        tempstr = "0." + tempstr
+        result = Double.Parse(tempstr)
 
-		Return result
-	End Function
+        Return result
+    End Function
 
-	Public Function GetStringTime(ByVal time As Integer, ByVal abbreviate As Boolean) As String
+    Public Function GethrefFromImgLink(ByVal str As String) As String
+        Dim ret As String = ""
+
+        If str = "" Then
+            Return ret
+        End If
+
+        Dim startidx As Integer = str.IndexOf("webimage/") + "webimage/".Length
+        Dim endidx As Integer = str.IndexOf("-0-feed?")
+
+        Return "www.wish.com/product/" + GetStringInRange(startidx, endidx, str)
+    End Function
+
+    Public Function GetStringTime(ByVal time As Integer, ByVal abbreviate As Boolean) As String
 		If time >= 1000 Then
 			If (time / 1000) >= 60 Then
 				If ((time / 1000) / 60) >= 60 Then

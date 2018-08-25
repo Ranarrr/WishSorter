@@ -16,7 +16,7 @@ Public Class WishItem
         End If
 
         isItemFree = isFree
-            LinkToImage = linkImage
+        LinkToImage = linkImage
     End Sub
 
     Property getsetLinkSite() As String
