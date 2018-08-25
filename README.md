@@ -1,6 +1,7 @@
 # WishSorter
 
-### Currently does not work!
+### <s>Currently does not work!</s>
+> Some functions do not work.
 
 - This is a program to help sort the prices on wish (https://wish.com)
 - This is not a finished product. (Please check the TODO-list)
